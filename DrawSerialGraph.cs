@@ -60,6 +60,7 @@ public class Device
     
     public void Update(int frame_count)
     {
+        
         foreach (var graphdata in graph)
         {
             int addr = graphdata.register;
@@ -149,6 +150,14 @@ static class DrawSerialGraph
         {
             device[index].Update(frame_count);
         }
+
+        int[] tmp = new int[5];
+        int y_index = device[0].graph[0].y.Length - 1;
+        for (int i = 0; i < device[0].graph.Count; i++)
+        {
+            tmp[i] = device[0].graph[i].y[y_index];
+        }
+        DumpDataToExcel.DumpDataToSave(frame_count, tmp[0], tmp[1], tmp[2], tmp[3]);
     }
 
 }

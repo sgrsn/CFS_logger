@@ -46,5 +46,7 @@
             </d3:Chart.LegendContent>
             <Grid x:Name="lines_right"/>
         </d3:Chart>
+        <Button x:Name="LogStartButton" Content="Log Start" HorizontalAlignment="Left" Margin="598,103,0,0" VerticalAlignment="Top" Width="75" Click="LogStartButton_Click"/>
+        <Button x:Name="LogStopButton" Content="Log Stop" HorizontalAlignment="Left" Margin="598,137,0,0" VerticalAlignment="Top" Width="75" Click="LogStopButton_Click"/>
     </Grid>
 </Window>

@@ -55,5 +55,15 @@ namespace CFS_logger
         {
 
         }
+
+        private void LogStartButton_Click(object sender, RoutedEventArgs e)
+        {
+            DumpDataToExcel.StartLog();
+        }
+
+        private void LogStopButton_Click(object sender, RoutedEventArgs e)
+        {
+            DumpDataToExcel.SaveDataToExcelFile();
+        }
     }
 }
