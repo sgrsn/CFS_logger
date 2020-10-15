@@ -35,13 +35,16 @@ namespace CFS_logger
         {
         }
 
-        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        private void CFSConnectButton_Click(object sender, RoutedEventArgs e)
         {
             if (!CFSPortSelector.IsComboBoxItemConnected())
             {
-                DrawSerialGraph.LinkingRegister2Graph(0x00, 0);
-                DrawSerialGraph.LinkingRegister2Graph(0x01, 0);
-                DrawSerialGraph.LinkingRegister2Graph(0x02, 0);
+                DrawSerialGraph.LinkingRegister2Graph(0x00, 0, "Fx", "red");
+                DrawSerialGraph.LinkingRegister2Graph(0x01, 0, "Fy", "blue");
+                DrawSerialGraph.LinkingRegister2Graph(0x02, 0, "Fz", "green");
+                DrawSerialGraph.LinkingRegister2Graph(0x03, 1, "Mx", "red");
+                DrawSerialGraph.LinkingRegister2Graph(0x04, 1, "My", "blue");
+                DrawSerialGraph.LinkingRegister2Graph(0x05, 1, "Mz", "green");
                 DrawSerialGraph.AddSerialDevice(CFSPortComboBox.Text);
             }
 
@@ -58,12 +61,14 @@ namespace CFS_logger
 
         private void LogStartButton_Click(object sender, RoutedEventArgs e)
         {
+            DrawSerialGraph.ResetFrameCounter();
             DumpDataToExcel.StartLog();
         }
 
         private void LogStopButton_Click(object sender, RoutedEventArgs e)
         {
-            DumpDataToExcel.SaveDataToExcelFile();
+            //DumpDataToExcel.SaveDataToExcelFile();
+            DumpDataToExcel.SaveDataToTxtFile();
         }
     }
 }

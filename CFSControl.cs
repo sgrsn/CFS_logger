@@ -25,7 +25,7 @@ namespace CFS_logger
 		private SerialReceivedHandle _handle;
 
 		private System.Timers.Timer update_timer;
-		private const int tick_receive = 1;
+		private const int tick_receive = 5;
 
 		private int portNo = 0;
         private char[] SerialNo = new char[9];

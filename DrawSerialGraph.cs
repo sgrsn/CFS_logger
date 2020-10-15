@@ -124,7 +124,7 @@ static class DrawSerialGraph
     }
 
 
-    public static void LinkingRegister2Graph(int register, int left_or_right)
+    public static void LinkingRegister2Graph(int register, int left_or_right, string description, string color)
     {
         device.Last().graph.Add(new GraphData());
         device.Last().graph.Last().register = register;
@@ -137,9 +137,29 @@ static class DrawSerialGraph
             mainWindow.lines_right.Children.Add(device.Last().graph.Last().linegraph);
         }
 
-        device.Last().graph.Last().linegraph.Stroke = device.Last().graph.Last().lg_color;
-        device.Last().graph.Last().linegraph.Description = String.Format(device.Last().graph.Last().description);
+        SolidColorBrush green = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+        SolidColorBrush red = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+        SolidColorBrush blue = new SolidColorBrush(Color.FromArgb(255, 0, 0, 255));
+
+        switch(color)
+        {
+            case "red":
+                device.Last().graph.Last().linegraph.Stroke = red;
+                break;
+            case "green":
+                device.Last().graph.Last().linegraph.Stroke = green;
+                break;
+            case "blue":
+                device.Last().graph.Last().linegraph.Stroke = blue;
+                break;
+        }
+        device.Last().graph.Last().linegraph.Description = String.Format(description);
         device.Last().graph.Last().linegraph.StrokeThickness = 2;
+    }
+
+    public static void ResetFrameCounter()
+    {
+        frame_count = 0;
     }
 
     public static void UpdateChartHandler()
@@ -151,13 +171,17 @@ static class DrawSerialGraph
             device[index].Update(frame_count);
         }
 
-        int[] tmp = new int[5];
-        int y_index = device[0].graph[0].y.Length - 1;
-        for (int i = 0; i < device[0].graph.Count; i++)
+
+        if(device[0].graph.Count > 0)
         {
-            tmp[i] = device[0].graph[i].y[y_index];
+            int[] tmp = new int[7];
+            int y_index = device[0].graph[0].y.Length - 1;
+            for (int i = 0; i < device[0].graph.Count; i++)
+            {
+                tmp[i] = device[0].graph[i].y[y_index];
+            }
+            DumpDataToExcel.DumpDataToSave(frame_count, tmp[0], tmp[1], tmp[2], tmp[3], tmp[4], tmp[5]);
         }
-        DumpDataToExcel.DumpDataToSave(frame_count, tmp[0], tmp[1], tmp[2], tmp[3]);
     }
 
 }

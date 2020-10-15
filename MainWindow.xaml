@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="646,53,0,0" VerticalAlignment="Top" Width="75" Click="ConnectButton_Click"/>
+        <Button x:Name="CFSConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="646,53,0,0" VerticalAlignment="Top" Width="75" Click="CFSConnectButton_Click"/>
         <ComboBox x:Name="CFSPortComboBox" HorizontalAlignment="Left" Margin="482,50,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
         <d3:Chart Name="plotter" Margin="38,175,418.6,43">
             <d3:Chart.Title>

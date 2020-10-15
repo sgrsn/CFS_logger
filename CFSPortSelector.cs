@@ -26,7 +26,7 @@ static class CFSPortSelector
     {
         mainWindow = (MainWindow)App.Current.MainWindow;
         CFSPortComboBox = mainWindow.CFSPortComboBox;
-        ConnectButton = mainWindow.ConnectButton;
+        ConnectButton = mainWindow.CFSConnectButton;
         CFSPortComboBox.SelectedIndex = 0;
         SetTimer();
     }
