@@ -123,6 +123,10 @@ static class DrawSerialGraph
         }
     }
 
+    public static void CFSOffset(int index=0)
+    {
+        device[index].cfs_control.SensorOffset();
+    }
 
     public static void LinkingRegister2Graph(int register, int left_or_right, string description, string color)
     {

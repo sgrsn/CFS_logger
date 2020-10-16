@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="CFSConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="646,53,0,0" VerticalAlignment="Top" Width="75" Click="CFSConnectButton_Click"/>
-        <ComboBox x:Name="CFSPortComboBox" HorizontalAlignment="Left" Margin="482,50,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
+        <Button x:Name="CFSConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="336,53,0,0" VerticalAlignment="Top" Width="75" Click="CFSConnectButton_Click"/>
+        <ComboBox x:Name="CFSPortComboBox" HorizontalAlignment="Left" Margin="201,50,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
         <d3:Chart Name="plotter" Margin="38,175,418.6,43">
             <d3:Chart.Title>
                 <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5">TITLE</TextBlock>
@@ -48,5 +48,6 @@
         </d3:Chart>
         <Button x:Name="LogStartButton" Content="Log Start" HorizontalAlignment="Left" Margin="598,103,0,0" VerticalAlignment="Top" Width="75" Click="LogStartButton_Click"/>
         <Button x:Name="LogStopButton" Content="Log Stop" HorizontalAlignment="Left" Margin="598,137,0,0" VerticalAlignment="Top" Width="75" Click="LogStopButton_Click"/>
+        <Button x:Name="OffsetButton" Content="Offset" HorizontalAlignment="Left" Margin="246,122,0,0" VerticalAlignment="Top" Width="75" Click="OffseetButton_Click"/>
     </Grid>
 </Window>

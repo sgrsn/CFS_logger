@@ -70,5 +70,10 @@ namespace CFS_logger
             //DumpDataToExcel.SaveDataToExcelFile();
             DumpDataToExcel.SaveDataToTxtFile();
         }
+
+        private void OffseetButton_Click(object sender, RoutedEventArgs e)
+        {
+            DrawSerialGraph.CFSOffset();
+        }
     }
 }

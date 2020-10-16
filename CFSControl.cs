@@ -25,6 +25,9 @@ namespace CFS_logger
 		private SerialReceivedHandle _handle;
 
 		private System.Timers.Timer update_timer;
+		private System.Timers.Timer offset_timer;
+		private int offset_counter = 0;
+		private int offset_count = 100;
 		private const int tick_receive = 5;
 
 		private int portNo = 0;
@@ -33,6 +36,7 @@ namespace CFS_logger
         private double[] Limit = new double[6];
         private double[] Data = new double[6];
         private double Fx, Fy, Fz, Mx, My, Mz;
+		private double Fx_offset, Fy_offset, Fz_offset, Mx_offset, My_offset, Mz_offset;
 
 		const byte DLE = 0x10;
 		const byte STX = 0x02;
@@ -60,6 +64,60 @@ namespace CFS_logger
 			SetCFSFilterFrequency(0x00);
 		}
 
+		public void SensorOffset()
+        {
+			// ここでupdateを止めてるはずなんだが止まらん???
+			update_timer.AutoReset = false;
+			update_timer.Stop();
+
+			offset_timer = new System.Timers.Timer(10*tick_receive);
+			offset_timer.Elapsed += OffsetSequence;
+			offset_timer.AutoReset = true;
+			offset_timer.Enabled = true;
+
+			Fx_offset = 0;
+			Fy_offset = 0;
+			Fz_offset = 0;
+			Mx_offset = 0;
+			My_offset = 0;
+			Mz_offset = 0;
+		}
+
+		private void OffsetSequence(Object source, ElapsedEventArgs e)
+        {
+			if (offset_counter < offset_count)
+			{
+				GetCFSData();
+				Fx_offset += Fx;
+				Fy_offset += Fy;
+				Fz_offset += Fz;
+				Mx_offset += Mx;
+				My_offset += My;
+				Mz_offset += Mz;
+				offset_counter++;
+			}
+            else
+            {
+				Fx_offset = Fx_offset / offset_count;
+				Fy_offset = Fy_offset / offset_count;
+				Fz_offset = Fz_offset / offset_count;
+				Mx_offset = Mx_offset / offset_count;
+				My_offset = My_offset / offset_count;
+				Mz_offset = Mz_offset / offset_count;
+
+				offset_timer.Stop();
+				offset_timer.Dispose();
+
+				//update_timer.Elapsed += update;
+				//update_timer.AutoReset = true;
+				//update_timer.Enabled = true;
+
+
+				update_timer.AutoReset = true;
+				update_timer.Start();
+			}
+		}
+
 		public void SetDatareceivedHandle(SerialReceivedHandle data_received_handle)
 		{
 			_handle = data_received_handle;
@@ -68,12 +126,12 @@ namespace CFS_logger
 		private void update(Object source, ElapsedEventArgs e)
 		{
 			GetCFSData();
-			Register[0x00] = (int)(Fx * 10000);
-			Register[0x01] = (int)(Fy * 10000);
-			Register[0x02] = (int)(Fz * 10000);
-			Register[0x03] = (int)(Mx * 10000);
-			Register[0x04] = (int)(My * 10000);
-			Register[0x05] = (int)(Mz * 10000);
+			Register[0x00] = (int)((Fx - Fx_offset) * 10000);
+			Register[0x01] = (int)((Fy - Fy_offset) * 10000);
+			Register[0x02] = (int)((Fz - Fz_offset) * 10000);
+			Register[0x03] = (int)((Mx - Mx_offset) * 10000);
+			Register[0x04] = (int)((My - My_offset) * 10000);
+			Register[0x05] = (int)((Mz - Mz_offset) * 10000);
 
 			if (Application.Current.Dispatcher.CheckAccess())
 			{
